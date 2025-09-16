@@ -20,7 +20,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE ../WinPort)
 target_include_directories(${PROJECT_NAME} PRIVATE ../utils/include)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
-	LIBRARY_OUTPUT_DIRECTORY "${INSTALL_DIR}/Plugins/${PROJECT_NAME}/"
+	LIBRARY_OUTPUT_DIRECTORY "${INSTALL_DIR}/Plugins/OpenWith/plug"
 	PREFIX ""
 	SUFFIX ".far-plug-wide")
 
