@@ -529,10 +529,6 @@ endif()
 if (NOT DEFINED OPENWITH OR OPENWITH)
     message(STATUS "OPENWITH plugin enabled")
     add_subdirectory (OpenWith)
-    # Explicitly install the OpenWith plugin file
-    install(FILES "${INSTALL_DIR}/Plugins/OpenWith/plug/OpenWith.far-plug-wide"
-            DESTINATION "lib/far2l/Plugins/OpenWith/plug"
-            COMPONENT base)
 else()
     message(STATUS "${ColorRed}OPENWITH plugin disabled due to OPENWITH=${OPENWITH}${ColorNormal}")
     install(CODE "
