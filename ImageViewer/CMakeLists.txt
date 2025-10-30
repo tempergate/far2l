@@ -36,9 +36,10 @@ set(CURRENT_TARGET "ImageViewer")
 # 
 # add_dependencies(${CURRENT_TARGET} copy_aux_files_for_${CURRENT_TARGET})
 
-# Alternative simple installation command if the above function doesn't exist
-install(TARGETS ${PROJECT_NAME}
-    LIBRARY DESTINATION "${INSTALL_DIR}/Plugins/${PROJECT_NAME}/plug"
+# Install from the custom build location
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/output/${PROJECT_NAME}.far-plug-wide"
+    DESTINATION "${INSTALL_DIR}/Plugins/ImageViewer/plug"
+    OPTIONAL
 )
 
 # If you need to install additional files (headers, configs, etc.)
