@@ -4,7 +4,9 @@ set(SOURCES
     ImageViewer.cpp
 )
 
-target_compile_definitions(ImageViewer PRIVATE)
+add_library (ImageViewer MODULE ${SOURCES})
+target_link_libraries(ImageViewer utils far2l)
+target_compile_definitions(ImageViewer PRIVATE -DWINPORT_DIRECT -DUNICODE)
 
 target_include_directories(${PROJECT_NAME} PRIVATE .)
 target_include_directories(${PROJECT_NAME} PRIVATE ../far2l/far2sdk)
