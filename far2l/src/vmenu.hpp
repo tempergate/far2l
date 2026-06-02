@@ -41,6 +41,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <farplug-wide.h>
 #include "manager.hpp"
 #include "frame.hpp"
+#include "keybar.hpp"
 #include "bitflags.hpp"
 #include "CriticalSections.hpp"
 
@@ -112,6 +113,8 @@ struct MenuItemEx
 	int ShowPos;
 	short AmpPos;	// Позиция автоназначенной подсветки
 	bool FilteredOut;
+
+	KeyBar MenuKeyBar;
 
 	DWORD SetCheck(uint32_t Value)
 	{

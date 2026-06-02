@@ -672,7 +672,7 @@ void VMenu::FilterStringUpdated(bool bLonger)
 		SetSelectPos(0, 1);
 }
 
-bool VMenu::IsFilterEditKey(FarKey Key)
+bool VMenu::IsFilterEditKey(FarKey Key)  
 {
 	return (Key >= (int)KEY_SPACE && WCHAR_IS_VALID(Key)) || Key == KEY_BS;
 }
@@ -952,6 +952,13 @@ int VMenu::ProcessKey(FarKey Key)
 			break;
 		}
 		case KEY_ESC:
+	    /*
+		case KEY_F1: {}  // Add here request to/from keypad and keypad element change used for help request
+		case KEY_F4: {}  // Add here request to/from keypad and keypad element change used in usermenu 
+						 //	  	as element edit or sethotkey in pluggin menu  
+		
+		
+		*/
 		case KEY_F10: {
 			EnableFilter(false);
 			if (!ParentDialog || CheckFlags(VMENU_COMBOBOX)) {
@@ -960,7 +967,7 @@ int VMenu::ProcessKey(FarKey Key)
 			}
 
 			break;
-		}
+		}  // Add here request to/from keypad and keypad element change
 		case KEY_HOME:
 		case KEY_NUMPAD7:
 		case KEY_CTRLHOME:
@@ -1159,7 +1166,7 @@ int VMenu::ProcessKey(FarKey Key)
 					if (ParentDialog)
 						Help::Present(L"MenuCmd",L"",FHELP_NOSHOWERROR);	// ParentDialog->ProcessKey(Key);
 					else
-						ShowHelp();
+						ShowHelp();  //here we need to come here from f1, and key-bar f1
 
 					break;
 				} else {
@@ -1194,7 +1201,13 @@ int VMenu::ProcessMouse(MOUSE_EVENT_RECORD *MouseEvent)
 			EndLoop = TRUE;
 
 		Modal::ExitCode = -1;
-		return FALSE;
+		
+		// Add keybar processing before returning FALSE  
+		if (MenuKeyBar.ProcessKey(Key)) {  
+			return TRUE;  
+		}  
+		
+		return FALSE;  
 	}
 
 	int MsX = MouseEvent->dwMousePosition.X;
@@ -2791,4 +2804,21 @@ void VMenu::EnableFilter(bool Enable)
 
 	if (!Enable)
 		RestoreFilteredItems();
+}
+
+void VMenu::InitKeyBar()  
+{  
+    MenuKeyBar.SetAllGroup(KBL_MAIN, Msg::MenuF1, 12);  
+    MenuKeyBar.SetAllGroup(KBL_SHIFT, Msg::MenuShiftF1, 12);  
+    MenuKeyBar.SetAllGroup(KBL_ALT, Msg::MenuAltF1, 12);  
+    MenuKeyBar.SetAllGroup(KBL_CTRL, Msg::MenuCtrlF1, 12);
+    MenuKeyBar.SetAllGroup(KBL_MAIN, Msg::MenuF4, 12);  
+    MenuKeyBar.SetAllGroup(KBL_SHIFT, Msg::MenuShiftF4, 12);  
+    MenuKeyBar.SetAllGroup(KBL_ALT, Msg::MenuAltF4, 12);  
+    MenuKeyBar.SetAllGroup(KBL_CTRL, Msg::MenuCtrlF4, 12);    
+    // ... other key groups  
+      
+    MenuKeyBar.ReadRegGroup(L"Menu", Opt.strLanguage);  
+    MenuKeyBar.SetAllRegGroup();  
+    SetKeyBar(&MenuKeyBar);  
 }
